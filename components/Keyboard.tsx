@@ -1,5 +1,5 @@
 import { Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 
 type KeyboardProps = {
     calculationFunc?: () => void;
@@ -9,6 +9,28 @@ type KeyboardProps = {
 
 
 export default function Keyboard({ calculationFunc, input, setInput }: KeyboardProps) {
+    const deletionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const deletionIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    // При зажатии кнопки "C" подождём 300 мс и запустим интервал удаления
+    const startDeleteTimer = () => {
+        deletionTimeoutRef.current = setTimeout(() => {
+        deletionIntervalRef.current = setInterval(() => {
+            setInput((prev) => (prev.length > 0 ? prev.slice(0, -1) : ""));
+        }, 100); // интервал удаления (каждые 100 мс)
+        }, 300); // задержка перед началом повторного удаления
+    };
+
+    const stopDeleteTimer = () => {
+        if (deletionTimeoutRef.current) {
+        clearTimeout(deletionTimeoutRef.current);
+        deletionTimeoutRef.current = null;
+        }
+        if (deletionIntervalRef.current) {
+        clearInterval(deletionIntervalRef.current);
+        deletionIntervalRef.current = null;
+        }
+    };
     const handlePress = (value: string) => {
         if (value === "C") {
             if (input.length > 0) {
@@ -55,6 +77,8 @@ export default function Keyboard({ calculationFunc, input, setInput }: KeyboardP
                     <TouchableOpacity
                         key={index}
                         onPress={() => handlePress(value)}
+                        onPressIn={value === "C" ? startDeleteTimer : undefined}
+                        onPressOut={value === "C" ? stopDeleteTimer : undefined}
                         disabled={!value}
                         className={`rounded-2xl w-[90px] h-[90px] mx-1 items-center justify-center ${
                             value === "C" ? "bg-secondary" : "bg-primary"
