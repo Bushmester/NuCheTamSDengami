@@ -13,7 +13,7 @@ export default function Index() {
 
   const { currentBalance } = useSelector((state: RootState) => state.budget);
         
-  const calculationFunc = () => {
+  const func = () => {
       const amount = parseFloat(input);
       if (!isNaN(amount) && amount > 0) {
           const newExpense = {
@@ -27,20 +27,23 @@ export default function Index() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-5xl text-accent font-bold">
-        Остатокк бюджета: {currentBalance.toFixed(2)}
-      </Text>
-      <Link href={"/settings"} className="text-accent">Settings</Link>
-      <View className="mt-10 bg-white flex-1">
-        <View className="p-4 rounded-lg mb-4 bg-gray-800">
-          <Text className="text-center text-2xl font-normal text-white">
-            {input || "0"}
-          </Text>
+    <View className="flex-1 bg-white justify-between">
+      <View>
+        <Text className="text-5xl text-accent font-bold">
+          Остаток бюджета: {currentBalance.toFixed(2)}
+        </Text>
+        <Link href={"/settings"} className="text-accent">
+          Settings
+        </Link>
+        <View className="mt-10 bg-white">
+          <View className="p-4 rounded-lg mb-4 bg-gray-800">
+            <Text className="text-center text-2xl font-normal text-white">
+              {input || "0"}
+            </Text>
+          </View>
         </View>
-      
-        <Keyboard calculationFunc={calculationFunc} input={input} setInput={setInput} />
       </View>
+      <Keyboard func={func} input={input} setInput={setInput} />
     </View>
   );
 }

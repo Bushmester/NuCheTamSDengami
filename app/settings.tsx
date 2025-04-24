@@ -22,13 +22,13 @@ export default function SettingsScreen () {
     };
 
     return (
-        <View className="mt-10 bg-white flex-1">
+        <View className="flex-1 bg-white justify-between">
             <View className="p-4 rounded-lg mb-4 bg-gray-800">
                 <Text className="text-center text-2xl font-normal text-white">
                     {initialAmount || "0"}
                 </Text>
             </View>
-            <Keyboard calculationFunc={handleSubmit} input={initialAmount} setInput={setInitialAmount} />
+            <Keyboard func={handleSubmit} input={initialAmount} setInput={setInitialAmount} />
         </View>
     );
 };

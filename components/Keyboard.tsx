@@ -2,12 +2,12 @@ import { Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
 type KeyboardProps = {
-    calculationFunc?: () => void;
+    func?: () => void;
     input: string;
     setInput: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Keyboard({ calculationFunc, input, setInput }: KeyboardProps) {
+export default function Keyboard({ func, input, setInput }: KeyboardProps) {
     const handlePress = (value: string) => {
         if (value === "C") {
             if (input.length > 0) {
@@ -38,7 +38,7 @@ export default function Keyboard({ calculationFunc, input, setInput }: KeyboardP
             const amount = parseFloat(input);
             if (amount > 0) {
                 if (!isNaN(amount)) {
-                    calculationFunc && calculationFunc();
+                    func && func();
                     setInput("");
                 }
             }
