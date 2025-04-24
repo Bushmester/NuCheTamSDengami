@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import Keyboard from "@/components/Keyboard";
 import type { RootState, AppDispatch } from '@/services/storage';
 import { addExpense } from "@/slices/slice";
@@ -18,7 +19,7 @@ export default function Index() {
           const newExpense = {
               id: Date.now().toString(),
               amount,
-              date: new Date(),
+              // date: new Date(),
           };
           dispatch(addExpense(newExpense));
           setInput("");

@@ -1,12 +1,12 @@
 export interface Expense {
     id: string;
     amount: number;
-    date: Date;
+    // date: Date;
 }
   
 export interface BudgetState {
     initialAmount: number;
     currentBalance: number;
-    endDate: Date;
+    // endDate: Date;
     expenses: Expense[];
 }
