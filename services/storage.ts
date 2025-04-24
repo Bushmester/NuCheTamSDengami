@@ -1,22 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BudgetState } from '@/types/types';
-import { STORAGE_KEY } from '@/constants/StorageKeys';
+import { configureStore } from '@reduxjs/toolkit';
+import budgetReducer from '@/slices/slice';
 
-export const saveBudgetState = async (state: BudgetState) => {
-    try {
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-        console.error('Ошибка сохранения бюджета', error);
-    }
-  };
+const store = configureStore({
+    reducer: {
+      budget: budgetReducer,
+    },
+  });
   
-export const loadBudgetState = async (): Promise<BudgetState | null> => {
-    try {
-        const data = await AsyncStorage.getItem(STORAGE_KEY);
-        return data ? JSON.parse(data) : null;
-    } catch (error) {
-        console.error('Ошибка загрузки бюджета', error);
-        return null;
-    }
-};
-
+  export type RootState = ReturnType<typeof store.getState>;
+  export type AppDispatch = typeof store.dispatch;
+  export default store;
