@@ -14,6 +14,7 @@ module.exports = {
         accent: "#335BF8",
         white: "#EBEBEB",
         black: "#212121",
+        whiteSeccondary: "#F2F2F2",
       }
     },
   },

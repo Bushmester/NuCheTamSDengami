@@ -11,7 +11,7 @@ export default function Index() {
   const [input, setInput] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
-  const { currentBalance } = useSelector((state: RootState) => state.budget);
+  const { currentBalance, endDate } = useSelector((state: RootState) => state.budget);
         
   const func = () => {
       const amount = parseFloat(input);
@@ -32,6 +32,9 @@ export default function Index() {
         <Text className="text-5xl text-accent font-bold">
           Остаток бюджета: {currentBalance.toFixed(2)}
         </Text>
+        <Text className="text-center text-lg text-gray-600">
+          {endDate ? new Date(endDate).toLocaleDateString("ru-RU") : "Дата не задана"}
+        </Text>
         <Link href={"/settings"} className="text-accent">
           Settings
         </Link>
@@ -41,6 +44,9 @@ export default function Index() {
               {input || "0"}
             </Text>
           </View>
+        </View>
+        <View className="bg-white">
+          <Text className="text-right text-2xl font-bold">{input || '0'}</Text>
         </View>
       </View>
       <Keyboard func={func} input={input} setInput={setInput} />

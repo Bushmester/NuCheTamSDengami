@@ -7,6 +7,6 @@ export interface Expense {
 export interface BudgetState {
     initialAmount: number;
     currentBalance: number;
-    // endDate: Date;
+    endDate: string;
     expenses: Expense[];
 }

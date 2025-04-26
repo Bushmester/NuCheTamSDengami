@@ -4,7 +4,7 @@ import { BudgetState, Expense } from '@/types/types';
 const initialState: BudgetState = {
     initialAmount: 0,
     currentBalance: 0,
-    // endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+    endDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString(),
     expenses: [],
 };
 
@@ -12,10 +12,10 @@ const budgetSlice = createSlice({
     name: 'budget',
     initialState,
     reducers: {
-      setBudget(state, action: PayloadAction<{ initialAmount: number; }>) {
+      setBudget(state, action: PayloadAction<{ initialAmount: number; endDate: string }>) {
         state.initialAmount = action.payload.initialAmount;
         state.currentBalance = action.payload.initialAmount;
-        // state.endDate = action.payload.endDate;
+        state.endDate = action.payload.endDate;
       },
       addExpense(state, action: PayloadAction<Expense>) {
         state.expenses.push(action.payload);
