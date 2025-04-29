@@ -12,6 +12,16 @@ export default function Index() {
   const dispatch = useDispatch<AppDispatch>();
 
   const { currentBalance, endDate } = useSelector((state: RootState) => state.budget);
+
+  let dailyBudgetDisplay = "Не задан";
+  if (endDate) {
+    const now = new Date();
+    const finishDate = new Date(endDate);
+    const timeDiff = finishDate.getTime() - now.getTime() + 1;
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const dailyBudgetValue = daysDiff > 0 ? currentBalance / daysDiff : 0;
+    dailyBudgetDisplay = dailyBudgetValue.toFixed(2);
+  }
         
   const func = () => {
       const amount = parseFloat(input);
@@ -31,6 +41,9 @@ export default function Index() {
       <View>
         <Text className="text-5xl text-accent font-bold">
           Остаток бюджета: {currentBalance.toFixed(2)}
+        </Text>
+        <Text className="text-center text-xl text-gray-600 mt-2">
+          Дневной бюджет: {dailyBudgetDisplay}
         </Text>
         <Text className="text-center text-lg text-gray-600">
           {endDate ? new Date(endDate).toLocaleDateString("ru-RU") : "Дата не задана"}
