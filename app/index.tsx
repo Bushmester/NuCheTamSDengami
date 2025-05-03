@@ -11,16 +11,14 @@ export default function Index() {
   const [input, setInput] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
-  const { currentBalance, endDate } = useSelector((state: RootState) => state.budget);
+  console.log(useSelector((state: RootState) => state.budget))
+
+  const { currentBalance, dailyBudgetValue, endDate, expenses } = useSelector((state: RootState) => state.budget);
 
   let dailyBudgetDisplay = "Не задан";
-  if (endDate) {
-    const now = new Date();
-    const finishDate = new Date(endDate);
-    const timeDiff = finishDate.getTime() - now.getTime() + 1;
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    const dailyBudgetValue = daysDiff > 0 ? currentBalance / daysDiff : 0;
-    dailyBudgetDisplay = dailyBudgetValue.toFixed(2);
+
+  if (dailyBudgetValue >= 0) {
+    dailyBudgetDisplay = dailyBudgetValue.toFixed(2)
   }
         
   const func = () => {
@@ -29,7 +27,7 @@ export default function Index() {
           const newExpense = {
               id: Date.now().toString(),
               amount,
-              // date: new Date(),
+              date: new Date().toISOString(),
           };
           dispatch(addExpense(newExpense));
           setInput("");
@@ -50,6 +48,9 @@ export default function Index() {
         </Text>
         <Link href={"/settings"} className="text-accent">
           Settings
+        </Link>
+        <Link href={"/history"} className="text-accent">
+          History
         </Link>
         <View className="mt-10 bg-white">
           <View className="p-4 rounded-lg mb-4 bg-gray-800">

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BudgetState, Expense } from '@/types/types';
 
 const initialState: BudgetState = {
-    initialAmount: 0,
+    dailyBudgetValue: 0,
     currentBalance: 0,
     endDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString(),
     expenses: [],
@@ -13,15 +13,29 @@ const budgetSlice = createSlice({
     initialState,
     reducers: {
       setBudget(state, action: PayloadAction<{ initialAmount: number; endDate: string }>) {
-        state.initialAmount = action.payload.initialAmount;
-        state.currentBalance = action.payload.initialAmount;
-        state.endDate = action.payload.endDate;
+        const currentBalance = action.payload.initialAmount;
+        const endDate = action.payload.endDate
+        const now = new Date();
+        const finishDate = new Date(endDate);
+
+        const timeDiff = finishDate.getTime() - now.getTime() + 1;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+        const dailyBudgetValue = daysDiff > 0 ? currentBalance / daysDiff : 0;
+
+        state.dailyBudgetValue = dailyBudgetValue
+        state.currentBalance = currentBalance;
+        state.endDate = endDate;
       },
       addExpense(state, action: PayloadAction<Expense>) {
+        console.log(action.payload)
         state.expenses.push(action.payload);
         if (state.currentBalance > 0) {
             state.currentBalance = Math.max(0, state.currentBalance - action.payload.amount);
         }
+        if (state.dailyBudgetValue > 0) {
+          state.dailyBudgetValue = Math.max(0, state.dailyBudgetValue - action.payload.amount);
+      }
       },
     },
   });
