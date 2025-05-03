@@ -35,7 +35,7 @@ const budgetSlice = createSlice({
         }
         if (state.dailyBudgetValue > 0) {
           state.dailyBudgetValue = Math.max(0, state.dailyBudgetValue - action.payload.amount);
-      }
+        }
       },
     },
   });
