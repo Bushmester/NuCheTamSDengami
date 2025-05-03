@@ -18,8 +18,8 @@ const budgetSlice = createSlice({
         const now = new Date();
         const finishDate = new Date(endDate);
 
-        const timeDiff = finishDate.getTime() - now.getTime() + 1;
-        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        const timeDiff = finishDate.getTime() - now.getTime();
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
 
         const dailyBudgetValue = daysDiff > 0 ? currentBalance / daysDiff : 0;
 

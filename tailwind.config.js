@@ -15,6 +15,7 @@ module.exports = {
         white: "#EBEBEB",
         black: "#212121",
         whiteSeccondary: "#F2F2F2",
+        lines: "#D9D9D9"
       }
     },
   },

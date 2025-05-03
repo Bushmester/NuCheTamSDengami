@@ -1,7 +1,7 @@
 import { Text, View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
 import Keyboard from "@/components/Keyboard";
 import DatePickModal from "@/components/DatePickModal";
 import { setBudget } from "@/slices/slice";
@@ -74,41 +74,54 @@ export default function SettingsScreen() {
     }
 
     dispatch(setBudget({ initialAmount: amount, endDate: selectedDate.toISOString() }));
-
-    router.push('/')
+    router.push("/");
   };
 
   const selectedOptionLabel =
     "по " +
-    (options.find(
-      (o) => o.date.toDateString() === selectedDate.toDateString()
-    )?.label || "");
+    (options.find((o) => o.date.toDateString() === selectedDate.toDateString())?.label || "");
 
   return (
     <View className="flex-1 bg-white justify-between">
       <View>
-        <View className="p-4 rounded-lg mb-4 bg-gray-800">
-          <Text className="text-center text-2xl font-normal text-white">
-            {initialAmount || "0"}
-          </Text>
+        <View className="p-4">
+            <View className="border-b-4 border-lines">
+                <TouchableOpacity onPress={() => router.back()} className="items-end mb-4">
+                    <Text className="text-accent font-bold text-xl">Назад</Text>
+                </TouchableOpacity>
+            </View>
         </View>
 
-        <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          className="border border-gray-300 rounded p-3 mb-4 items-center"
-        >
-          <Text>{selectedOptionLabel || "Выберите срок"}</Text>
-        </TouchableOpacity>
+        <View className="p-4">
+          <View className="border-b-4 border-lines">
+            <View className="flex-row justify-between mb-14">
+              <Text className="text-xl text-primary">Сумма</Text>
+              <Text className="text-7xl text-black font-bold">
+                {initialAmount || "0"}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex-row justify-between p-4">
+          <Text className="text-xl text-primary">Срок</Text>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text className="text-xl text-accent font-bold">
+              {selectedOptionLabel || "Выберите срок"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <Keyboard func={handleSubmit} input={initialAmount} setInput={setInitialAmount} />
-
-      <DatePickModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        options={options}
-        handleOptionSelect={handleOptionSelect}
-      />
+      <View>
+        <Keyboard func={handleSubmit} input={initialAmount} setInput={setInitialAmount} />
+        <DatePickModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          options={options}
+          handleOptionSelect={handleOptionSelect}
+        />
+      </View>
     </View>
   );
 }

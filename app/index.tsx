@@ -18,6 +18,18 @@ export default function Index() {
   if (dailyBudgetValue >= 0) {
     dailyBudgetDisplay = dailyBudgetValue.toFixed(2)
   }
+
+  const now = new Date();
+  const finishDate = new Date(endDate);
+  const timeDiff = finishDate.getTime() - now.getTime() + 1;
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+
+  const getDayLabel = (days: number): string => {
+    if (days === 1) return "день";
+    if ([2, 3, 4].includes(days % 10) && !(days % 100 >= 12 && days % 100 <= 14))
+      return "дня";
+    return "дней";
+  };
         
   const func = () => {
       const amount = parseFloat(input);
@@ -35,35 +47,37 @@ export default function Index() {
   return (
     <View className="flex-1 bg-white justify-between">
       <View>
-        <Text className="text-5xl text-accent font-bold">
-          Остаток бюджета: {currentBalance.toFixed(2)}
-        </Text>
-        <Text className="text-center text-xl text-gray-600 mt-2">
-          Дневной бюджет: {dailyBudgetDisplay}
-        </Text>
-        <Text className="text-center text-lg text-gray-600">
-          {endDate ? new Date(endDate).toLocaleDateString("ru-RU") : "Дата не задана"}
-        </Text>
-        <Link href={"/settings"} className="text-accent">
-          <Text className="text-5xl text-accent font-bold">
-            Остаток бюджета: {currentBalance.toFixed(2)}
-          </Text>
-        </Link>
-        <Link href={"/history"} className="text-accent">
-          History
-        </Link>
-        <View className="mt-10 bg-white">
-          <View className="p-4 rounded-lg mb-4 bg-gray-800">
-            <Text className="text-center text-2xl font-normal text-white">
-              {input || "0"}
-            </Text>
+        <View className="p-4">
+          <View className="border-b-4 border-lines">
+            <View className="flex-row justify-between items-center mb-4">
+              <Link href={"/history"} className="text-accent text-xl">
+                История
+              </Link>
+              <Link href={"/settings"} className="text-accent font-bold text-xl">
+                {currentBalance.toFixed(2)} на {daysDiff} {getDayLabel(daysDiff)}
+              </Link>
+            </View>
+          </View>  
+        </View>
+        <View className="p-4">
+          <View className="border-b-4 border-lines">
+            <View className="mb-8">
+              <Text className="text-7xl text-black font-bold">
+                {dailyBudgetDisplay}
+              </Text>
+              <Text className="text-lg text-primary">
+                На сегодня
+              </Text>
+            </View>
           </View>
         </View>
-        <View className="bg-white">
-          <Text className="text-right text-2xl font-bold">{input || '0'}</Text>
-        </View>
       </View>
-      <Keyboard func={func} input={input} setInput={setInput} />
+      <View>
+        <View className="bg-white">
+            <Text className="text-right text-7xl font-bold p-4 text-primary">{input || '0'}</Text>
+        </View>
+        <Keyboard func={func} input={input} setInput={setInput} />
+      </View>
     </View>
   );
 }
