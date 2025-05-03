@@ -39,8 +39,15 @@ const budgetSlice = createSlice({
       resetBudget() {
         return initialState;
       },
+      recalcDailyBudget(state) {
+        const now = new Date();
+        const finishDate = new Date(state.endDate);
+        const timeDiff = finishDate.getTime() - now.getTime() + 1;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        state.dailyBudgetValue = daysDiff > 0 ? state.currentBalance / daysDiff : 0;
+      },
     },
   });
   
-  export const { setBudget, addExpense, resetBudget } = budgetSlice.actions;
+  export const { setBudget, addExpense, resetBudget, recalcDailyBudget } = budgetSlice.actions;
   export default budgetSlice.reducer;
