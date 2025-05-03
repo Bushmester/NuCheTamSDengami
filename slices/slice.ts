@@ -28,7 +28,6 @@ const budgetSlice = createSlice({
         state.endDate = endDate;
       },
       addExpense(state, action: PayloadAction<Expense>) {
-        console.log(action.payload)
         state.expenses.push(action.payload);
         if (state.currentBalance > 0) {
             state.currentBalance = Math.max(0, state.currentBalance - action.payload.amount);

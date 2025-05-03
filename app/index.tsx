@@ -11,8 +11,6 @@ export default function Index() {
   const [input, setInput] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(useSelector((state: RootState) => state.budget))
-
   const { currentBalance, dailyBudgetValue, endDate, expenses } = useSelector((state: RootState) => state.budget);
 
   let dailyBudgetDisplay = "Не задан";
@@ -47,7 +45,9 @@ export default function Index() {
           {endDate ? new Date(endDate).toLocaleDateString("ru-RU") : "Дата не задана"}
         </Text>
         <Link href={"/settings"} className="text-accent">
-          Settings
+          <Text className="text-5xl text-accent font-bold">
+            Остаток бюджета: {currentBalance.toFixed(2)}
+          </Text>
         </Link>
         <Link href={"/history"} className="text-accent">
           History
