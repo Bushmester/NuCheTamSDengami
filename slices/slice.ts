@@ -36,8 +36,11 @@ const budgetSlice = createSlice({
           state.dailyBudgetValue = Math.max(0, state.dailyBudgetValue - action.payload.amount);
         }
       },
+      resetBudget() {
+        return initialState;
+      },
     },
   });
   
-  export const { setBudget, addExpense } = budgetSlice.actions;
+  export const { setBudget, addExpense, resetBudget } = budgetSlice.actions;
   export default budgetSlice.reducer;

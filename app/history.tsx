@@ -14,7 +14,6 @@ export default function ExpenseHistoryScreen() {
     );
 
     const renderExpenseItem = ({ item }: { item: any }) => {
-        // Форматирование даты
         const expenseDate = new Date(item.date).toLocaleDateString("ru-RU", {
         day: "numeric",
         month: "long",

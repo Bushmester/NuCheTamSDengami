@@ -1,7 +1,7 @@
 export interface Expense {
     id: string;
     amount: number;
-    // date: Date;
+    date: string;
 }
   
 export interface BudgetState {

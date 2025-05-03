@@ -56,6 +56,9 @@ export default function Index() {
               <Link href={"/settings"} className="text-accent font-bold text-xl">
                 {currentBalance.toFixed(2)} на {daysDiff} {getDayLabel(daysDiff)}
               </Link>
+              {/* <Link href={"/clear"} className="text-accent font-bold text-xl">
+                Clear
+              </Link> */}
             </View>
           </View>  
         </View>
